@@ -48,7 +48,7 @@ def calculate_metrics(model_pred_df, genre_list, genre_true_counts, genre_tp_cou
     micro_f1 = 2 * micro_precision * micro_recall / (micro_precision + micro_recall)
 
     #macro metrics
-    macro_prec_list, macro_recall_list, macro_f1_list == [], [], []
+    macro_prec_list, macro_recall_list, macro_f1_list = [], [], []
 
     for g in genre_list:
         tp, fp, fn = genre_tp_counts[g], genre_fp_counts[g], genre_true_counts[g] - genre_tp_counts[g]

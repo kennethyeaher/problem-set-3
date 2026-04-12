@@ -36,7 +36,7 @@ def process_data(model_pred_df, genres_df):
     genre_list = genres_df['genre'].tolist()
 
     # pasrese string lists into python lists 
-    model_pred_df['actual_parsed'] = model_pred_df['actual genre'].apply(ast.literal_eval)
+    model_pred_df['actual_parsed'] = model_pred_df['actual genres'].apply(ast.literal_eval)
 
     # explode actual genres into one row per genre
     all_actuals = model_pred_df['actual_parsed'].explode()
