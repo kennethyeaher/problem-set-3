@@ -7,6 +7,7 @@ PART 1: PRE-PROCESSING
 '''
 
 import pandas as pd
+import ast
 
 def load_data():
     '''
@@ -32,6 +33,24 @@ def process_data(model_pred_df, genres_df):
         genre_tp_counts (dict): Dictionary of true positive genre counts
         genre_fp_counts (dict): Dictionary of false positive genre counts
     '''
+    genre_list = genres_df['genre'].tolist()
 
-    # Your code here
-    pass
+    # pasrese string lists into python lists 
+    model_pred_df['actual_parsed'] = model_pred_df['actual genre'].apply(ast.literal_eval)
+
+    # explode actual genres into one row per genre
+    all_actuals = model_pred_df['actual_parsed'].explode()
+    genre_true_counts = {g: 0 for g in genre_list} | all_actuals.value_counts().to_dict()
+
+    # tp, predicted genre is in actual list; fp, it's not
+    correct = model_pred_df[model_pred_df['correct?'] == 1]['predicted'].value_counts().to_dict()
+    incorrect = model_pred_df[model_pred_df['correct?'] == 0]['predicted'].value_counts().to_dict()
+
+    genre_tp_counts = {g: correct.get(g, 0) for g in genre_list}
+    genre_fp_counts = {g: incorrect.get(g, 0) for g in genre_list}
+
+    return genre_list, genre_true_counts, genre_tp_counts, genre_fp_counts
+
+
+
+
