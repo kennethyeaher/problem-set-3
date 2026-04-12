@@ -9,6 +9,7 @@ PART 2: METRICS CALCULATION
 import numpy as np
 from sklearn.metrics import precision_recall_fscore_support
 import pandas as pd
+import ast
 
 def calculate_metrics(model_pred_df, genre_list, genre_true_counts, genre_tp_counts, genre_fp_counts):
     '''
@@ -37,8 +38,31 @@ def calculate_metrics(model_pred_df, genre_list, genre_true_counts, genre_tp_cou
     Hint #2: Micro metrics are tuples, macro metrics are lists
 
     '''
+    #micro metrics
+    total_tp = sum(genre_tp_counts.values())
+    total_fp = sum(genre_fp_counts.values())
+    total_fn = sum(genre_true_counts[g] - genre_tp_counts[g] for g in genre_list)
 
-    # Your code here
+    micro_precision = total_tp / (total_tp + total_fp)
+    micro_recall = total_tp / (total_tp + total_fn)
+    micro_f1 = 2 * micro_precision * micro_recall / (micro_precision + micro_recall)
+
+    #macro metrics
+    macro_prec_list, macro_recall_list, macro_f1_list == [], [], []
+
+    for g in genre_list:
+        tp, fp, fn = genre_tp_counts[g], genre_fp_counts[g], genre_true_counts[g] - genre_tp_counts[g]
+        p = tp / (tp + fp) if (tp + fp) else 0
+        r = tp / (tp + fn) if (tp + fn) else 0
+        f = 2 * p * r / (p + r) if (p + r) else 0
+        macro_prec_list.append(p)
+        macro_recall_list.append(r)
+        macro_f1_list.append(f)
+
+    return micro_precision, micro_recall, micro_f1, macro_prec_list, macro_recall_list, macro_f1_list
+
+
+
 
     
 def calculate_sklearn_metrics(model_pred_df, genre_list):
