@@ -61,9 +61,6 @@ def calculate_metrics(model_pred_df, genre_list, genre_true_counts, genre_tp_cou
 
     return micro_precision, micro_recall, micro_f1, macro_prec_list, macro_recall_list, macro_f1_list
 
-
-
-
     
 def calculate_sklearn_metrics(model_pred_df, genre_list):
     '''
@@ -84,5 +81,17 @@ def calculate_sklearn_metrics(model_pred_df, genre_list):
     pred_matrix = pd.DataFrame(pred_rows)
     true_matrix = pd.DataFrame(true_rows)
     '''
+    from sklearn.preprocessing import MultiLabelBinarizer
 
-    # Your code here
+    mlb = MultiLabelBinarizer(classes=genre_list)
+    true_matrix = pd.DataFrame(mlb.fit_transform(model_pred_df['actual genres'].apply(ast.literal_eval)), columns=genre_list)
+    pred_matrix = pd.DataFrame(mlb.transform(model_pred_df['predicted'].apply(lambda x: [x])), columns=genre_list)
+
+    macro_prec, macro_rec, macro_f1, _ = precision_recall_fscore_support(
+        true_matrix, pred_matrix, average='macro', zero_division=0
+    )
+    micro_prec, micro_rec, micro_f1, _ = precision_recall_fscore_support(
+        true_matrix, pred_matrix, average='micro', zero_division=0
+    )
+
+    return macro_prec, macro_rec, macro_f1, micro_prec, micro_rec, micro_f1
