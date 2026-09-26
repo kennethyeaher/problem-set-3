@@ -1,5 +1,10 @@
 # Classification Evaluation Metrics
 
+![Python](docs/readme/badges/python-3776AB.svg)
+![pandas](docs/readme/badges/pandas-150458.svg)
+![NumPy](docs/readme/badges/numpy-013243.svg)
+![scikit-learn](docs/readme/badges/scikitlearn-F7931E.svg)
+
 A coursework exercise calculating micro and macro precision, recall, and F1 for genre predictions. It makes the aggregation steps inspectable, then compares the manual calculations with scikit-learn metrics.
 
 ## My contribution
@@ -11,6 +16,12 @@ I implemented the preprocessing and metric functions in the [course starter](htt
 - [Preprocessing](src/preprocessing.py) parses genre lists and counts true and false positives.
 - [Metrics](src/metrics_calculation.py) calculates aggregate scores and calls scikit-learn for comparison.
 - [Entry point](main.py) prints both sets of results for review.
+
+## Why both micro and macro scores matter
+
+Micro scores pool counts across genres, so frequent labels contribute more to the total. Macro scores average class level values and give each genre equal weight. Comparing them helps reveal whether a headline result hides uneven performance across labels.
+
+The manual implementation makes the counting logic visible. The scikit-learn path provides a second implementation to inspect; agreement should be checked from actual output rather than assumed. The supplied prediction file is fixed, so these scores describe that input rather than generalization to a new dataset.
 
 ## Run locally
 
