@@ -1,3 +1,24 @@
+# Classification Evaluation Metrics
+
+A coursework exercise calculating micro and macro precision, recall, and F1 for genre predictions. It makes the aggregation steps inspectable, then compares the manual calculations with scikit-learn metrics.
+
+## My contribution
+
+I implemented the preprocessing and metric functions in the [course starter](https://github.com/gi11ikin/problem-set-3). The repository includes the prediction and genre CSV files used by the exercise.
+
+## What to inspect
+
+- [Preprocessing](src/preprocessing.py) parses genre lists and counts true and false positives.
+- [Metrics](src/metrics_calculation.py) calculates aggregate scores and calls scikit-learn for comparison.
+- [Entry point](main.py) prints both sets of results for review.
+
+## Run locally
+
+Create a fresh Python environment, install `requirements.txt`, and run `python main.py` from the repository root. Inputs are read from `data/`. The program produces console output; it does not have a graphical interface. This exercise evaluates supplied predictions and does not train a genre classifier.
+
+<details>
+<summary>Original course assignment</summary>
+
 PROBLEM SET #3: EVALUATION METRICS
 
 Instructions:
@@ -20,3 +41,18 @@ When you're done:
 Submission: You will submit the GitHub URL for this repo in ELMS.
 
 Grading: We will look to make sure you've output the correct print statements. We will only run main.py, so make sure to stucture this correctly. Credit will be given for adhering to the course's Code Standards and Data Standards, using GitHub correctly, and producing the correct output, among other considerations.
+
+</details>
+
+![Decorative project banner: Precision, recall, and the way we count errors.](docs/readme/footer.svg)
+
+---
+
+## Author
+
+**Kenneth Yeaher**  
+Master of Information Management  
+University of Maryland, College Park  
+[![LinkedIn: Kenneth Yeaher](https://img.shields.io/badge/LinkedIn-Kenneth_Yeaher-0A66C2?style=flat)](https://www.linkedin.com/in/kennethyeaher/)
+
+`Python` · `Precision and Recall`
